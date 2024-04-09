@@ -1,0 +1,17 @@
+<div class="flex">
+  <div class="flex-1">
+    <h3>50%</h3>
+    <app-list
+      [receipts$]="receipts50$"
+      (removeReceipt)="removeReceipt.emit($event)"
+    ></app-list>
+  </div>
+
+  <div class="flex-1">
+    <h3>100%</h3>
+    <app-list
+      [receipts$]="receipts100$"
+      (removeReceipt)="removeReceipt.emit($event)"
+    ></app-list>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<mat-list>
+  <mat-list-item *ngFor="let receipt of receipts$ | async; last as last">
+    <div class="flex justify-between items-center">
+      <span>{{ receipt?.total }}kr {{ receipt?.tag }}</span>
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="removeReceipt.emit(receipt)"
+        attr.aria-label="Remove receipt with total of {{
+          receipt?.total
+        }} and purchaser {{ receipt?.purchaser }}"
+      >
+        <mat-icon aria-hidden="false" fontIcon="delete"></mat-icon>
+      </button>
+    </div>
+    <div>
+      <mat-divider *ngIf="!last"></mat-divider>
+    </div>
+  </mat-list-item>
+</mat-list>
