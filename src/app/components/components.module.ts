@@ -8,14 +8,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [ListComponent, ReceiptListComponent],
-  imports: [
-    CommonModule,
-    MatListModule,
-    MatDividerModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
-  exports: [ListComponent, ReceiptListComponent],
+    imports: [
+        CommonModule,
+        MatListModule,
+        MatDividerModule,
+        MatButtonModule,
+        MatIconModule,
+        ListComponent, ReceiptListComponent,
+    ],
+    exports: [ListComponent, ReceiptListComponent],
 })
 export class ComponentsModule {}
