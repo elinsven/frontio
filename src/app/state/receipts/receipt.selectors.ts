@@ -55,6 +55,10 @@ export const selectReceiptTotal = createSelector(
       );
 
     let person = totalE > totalL ? 'E' : 'L';
-    return `${person} is expected to recieve ${Math.abs(totalE - totalL)}kr`;
+    const diff = Math.abs(totalE - totalL);
+    if (diff > 0) {
+      return `${person} is expected to recieve ${diff}kr`;
+    }
+    return undefined;
   }
 );

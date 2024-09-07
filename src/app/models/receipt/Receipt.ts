@@ -2,7 +2,7 @@ export type Purchaser = 'E' | 'L';
 export type PaymentOption = 50 | 100;
 
 export interface Receipt {
-  id?: string;
+  id: string;
   total: number;
   tag?: string;
   purchaser: Purchaser;

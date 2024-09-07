@@ -10,12 +10,9 @@ export const initialState: ReceiptState = { receipts: [] };
 
 export const receiptReducer = createReducer(
   initialState,
-  on(addReceipt, (state, { total, tag, purchaser, paymentOption }) => ({
+  on(addReceipt, (state, { id, total, tag, purchaser, paymentOption }) => ({
     ...state,
-    receipts: [
-      ...state.receipts,
-      { id: Date.now().toString(), total, tag, purchaser, paymentOption },
-    ],
+    receipts: [...state.receipts, { id, total, tag, purchaser, paymentOption }],
   })),
   on(removeReceipt, (state, { id }) => ({
     ...state,

@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { Receipt } from 'src/app/models/receipt/Receipt';
 
 @Component({
@@ -8,6 +7,6 @@ import { Receipt } from 'src/app/models/receipt/Receipt';
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent {
-  @Input() receipts$: Observable<Receipt[]> = of([]);
+  @Input() receipts: Receipt[] = [];
   @Output() removeReceipt = new EventEmitter<Receipt>();
 }

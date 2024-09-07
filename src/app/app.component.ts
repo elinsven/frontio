@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Signal, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { PaymentOption, Receipt } from './models/receipt/Receipt';
+import { PaymentOption, Purchaser, Receipt } from './models/receipt/Receipt';
 import { addReceipt, removeReceipt } from './state/receipts/receipt.actions';
-import { Observable } from 'rxjs';
 import {
   selectAllReceipts,
   selectReceiptsByPurchaserAndPaymentOption,
   selectReceiptTotal,
 } from './state/receipts/receipt.selectors';
-import { AppState } from './state/app.state';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -17,51 +21,71 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  receipts$: Observable<Receipt[]> = this.store.select(selectAllReceipts);
-  receiptsByPurchaserE50$: Observable<Receipt[]> = this.store.select(
+  readonly store = inject(Store);
+
+  receipts: Signal<Receipt[]> = this.store.selectSignal(selectAllReceipts);
+  receiptsByPurchaserE50: Signal<Receipt[]> = this.store.selectSignal(
     selectReceiptsByPurchaserAndPaymentOption('E', 50)
   );
-  receiptsByPurchaserE100$: Observable<Receipt[]> = this.store.select(
+  receiptsByPurchaserE100: Signal<Receipt[]> = this.store.selectSignal(
     selectReceiptsByPurchaserAndPaymentOption('E', 100)
   );
-  receiptsByPurchaserL50$: Observable<Receipt[]> = this.store.select(
+  receiptsByPurchaserL50: Signal<Receipt[]> = this.store.selectSignal(
     selectReceiptsByPurchaserAndPaymentOption('L', 50)
   );
-  receiptsByPurchaserL100$: Observable<Receipt[]> = this.store.select(
+  receiptsByPurchaserL100: Signal<Receipt[]> = this.store.selectSignal(
     selectReceiptsByPurchaserAndPaymentOption('L', 100)
   );
-  total$: Observable<string> = this.store.select(selectReceiptTotal);
+  total: Signal<string | undefined> =
+    this.store.selectSignal(selectReceiptTotal);
+  addReceiptForm: FormGroup = new FormBuilder().group({
+    total: new FormControl('', [
+      Validators.required,
+      Validators.pattern('\\d+\\s?[lLeE]\\s?[a-zåäöA-ZÅÄÖ0-9\\s]*'),
+    ]),
+    paymentOption: new FormControl('50'),
+  });
 
-  addReceiptForm: FormGroup;
+  get totalFormControl(): AbstractControl {
+    return this.addReceiptForm.controls['total'];
+  }
 
-  constructor(
-    private store: Store<AppState>,
-    private formBuilder: FormBuilder
-  ) {
-    this.addReceiptForm = this.formBuilder.group({
-      total: '',
-      tag: '',
-      purchaser: 'E',
-      paymentOption: '50',
-    });
+  get paymentOptionFormControl(): AbstractControl {
+    return this.addReceiptForm.controls['paymentOption'];
   }
 
   submitReceipt() {
-    if (this.addReceiptForm.valid) {
-      const { total, tag, purchaser, paymentOption } =
-        this.addReceiptForm.value;
+    const totalValue = this.totalFormControl.value;
+    const total = Number(totalValue.match('^\\d+\\s?')[0]);
+    const purchaser: Purchaser = totalValue.match('[lLeE]')[0].toUpperCase();
+
+    if (this.addReceiptForm.valid && total && purchaser) {
+      const tag =
+        totalValue.match('[lLeE]\\s?([a-zåäöA-ZÅÄÖ0-9\\s]*)')[1] || '';
+
       this.store.dispatch(
         addReceipt({
-          total: Number(total),
+          id: Date.now().toString(),
+          total,
           tag,
           purchaser,
-          paymentOption: Number(paymentOption) as PaymentOption,
+          paymentOption: Number(
+            this.paymentOptionFormControl.value
+          ) as PaymentOption,
         })
       );
+
+      this.resetForm();
     }
   }
 
   removeReceipt(receipt: Receipt) {
-    this.store.dispatch(removeReceipt({ id: receipt.id as string }));
+    this.store.dispatch(removeReceipt({ id: receipt.id }));
+  }
+
+  private resetForm() {
+    this.totalFormControl.reset();
+    this.totalFormControl.setErrors(null);
+    this.paymentOptionFormControl.setValue('50');
   }
 }

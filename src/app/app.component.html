@@ -8,38 +8,28 @@
   >
     <mat-form-field>
       <mat-label>Total</mat-label>
-      <input matInput type="number" required formControlName="total" />
+      <input autofocus matInput required formControlName="total" />
+      <mat-hint
+        >Enter a number followed by 'e' or 'l' (case-insensitive) and any
+        letters (e.g., 34eburger king)</mat-hint
+      >
+      @if (totalFormControl.hasError('pattern')) {
+      <mat-error>Please enter a valid value</mat-error>
+      } @if (totalFormControl.hasError('required')) {
+      <mat-error>This field is required</mat-error>
+      }
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Tag</mat-label>
-      <input matInput type="text" formControlName="tag" />
-    </mat-form-field>
-
-    <div class="flex radio-groups">
-      <div class="flex-col">
-        <label id="purchaser-label">Purchaser</label>
-        <mat-radio-group
-          aria-labelledby="purchaser-label"
-          aria-label="Select the purchaser of the receipt"
-          formControlName="purchaser"
-        >
-          <mat-radio-button color="primary" value="E">E</mat-radio-button>
-          <mat-radio-button color="primary" value="L">L</mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-      <div class="flex-col">
-        <label id="payment-option-label">Payment Options</label>
-        <mat-radio-group
-          aria-labelledby="payment-option-label"
-          aria-label="Select the payment option"
-          formControlName="paymentOption"
-        >
-          <mat-radio-button color="primary" value="50">50%</mat-radio-button>
-          <mat-radio-button color="primary" value="100">100%</mat-radio-button>
-        </mat-radio-group>
-      </div>
+    <div class="flex-col radio-groups">
+      <label id="payment-option-label">Payment Options</label>
+      <mat-radio-group
+        aria-labelledby="payment-option-label"
+        aria-label="Select the payment option"
+        formControlName="paymentOption"
+      >
+        <mat-radio-button color="primary" value="50">50%</mat-radio-button>
+        <mat-radio-button color="primary" value="100">100%</mat-radio-button>
+      </mat-radio-group>
     </div>
 
     <button
@@ -56,8 +46,8 @@
     <div class="flex-1">
       <h2>E</h2>
       <app-receipt-list
-        [receipts50$]="receiptsByPurchaserE50$"
-        [receipts100$]="receiptsByPurchaserE100$"
+        [receipts50]="receiptsByPurchaserE50()"
+        [receipts100]="receiptsByPurchaserE100()"
         (removeReceipt)="removeReceipt($event)"
       ></app-receipt-list>
     </div>
@@ -65,20 +55,22 @@
     <div class="flex-1">
       <h2>L</h2>
       <app-receipt-list
-        [receipts50$]="receiptsByPurchaserL50$"
-        [receipts100$]="receiptsByPurchaserL100$"
+        [receipts50]="receiptsByPurchaserL50()"
+        [receipts100]="receiptsByPurchaserL100()"
         (removeReceipt)="removeReceipt($event)"
       ></app-receipt-list>
     </div>
   </div>
 
+  @if (total()) {
   <div class="complete-total-wrapper">
     <div class="flex items-center justify-center">
-      <p class="total">{{ total$ | async }}</p>
+      <p class="total">{{ total() }}</p>
 
       <button mat-raised-button color="primary" class="complete-button">
         Complete
       </button>
     </div>
   </div>
+  }
 </div>

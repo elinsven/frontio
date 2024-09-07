@@ -1,24 +1,24 @@
 <mat-list>
-  @for (receipt of receipts$ | async; track receipt; let last = $last) {
-    <mat-list-item>
-      <div class="flex justify-between items-center">
-        <span>{{ receipt?.total }}kr {{ receipt?.tag }}</span>
-        <button
-          mat-icon-button
-          color="warn"
-          (click)="removeReceipt.emit(receipt)"
+  @for (receipt of receipts; track receipt; let last = $last) {
+  <mat-list-item>
+    <div class="flex justify-between items-center">
+      <span>{{ receipt?.total }}kr {{ receipt?.tag }}</span>
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="removeReceipt.emit(receipt)"
         attr.aria-label="Remove receipt with total of {{
           receipt?.total
         }} and purchaser {{ receipt?.purchaser }}"
-          >
-          <mat-icon aria-hidden="false" fontIcon="delete"></mat-icon>
-        </button>
-      </div>
-      <div>
-        @if (!last) {
-          <mat-divider></mat-divider>
-        }
-      </div>
-    </mat-list-item>
+      >
+        <mat-icon aria-hidden="false" fontIcon="delete"></mat-icon>
+      </button>
+    </div>
+    <div>
+      @if (!last) {
+      <mat-divider></mat-divider>
+      }
+    </div>
+  </mat-list-item>
   }
 </mat-list>
