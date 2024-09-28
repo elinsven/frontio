@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { Receipt } from 'src/app/models/receipt/Receipt';
 import { addReceipt, removeReceipt, resetState } from './receipt.actions';
+import { Receipt } from '../../models/receipt/Receipt';
 
 export interface ReceiptState {
   receipts: Receipt[];

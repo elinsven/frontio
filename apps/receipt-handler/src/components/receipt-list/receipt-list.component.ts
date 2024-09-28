@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Receipt } from 'src/app/models/receipt/Receipt';
 import { ListComponent } from '../list/list.component';
+import { Receipt } from '../../app/models/receipt/Receipt';
 
 @Component({
-    selector: 'app-receipt-list',
-    templateUrl: './receipt-list.component.html',
-    styleUrls: ['./receipt-list.component.scss'],
-    standalone: true,
-    imports: [ListComponent],
+  selector: 'app-receipt-list',
+  templateUrl: './receipt-list.component.html',
+  styleUrls: ['./receipt-list.component.scss'],
+  standalone: true,
+  imports: [ListComponent],
 })
 export class ReceiptListComponent {
   @Input() receipts50: Receipt[] = [];

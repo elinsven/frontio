@@ -1,5 +1,5 @@
 {
-  "name": "receipt-handler",
+  "name": "@receipt-handler/source",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -33,6 +33,7 @@
     "@angular/cli": "^18.2.3",
     "@angular/compiler-cli": "18.2.3",
     "@nx/angular": "19.6.5",
+    "@nx/eslint-plugin": "19.6.5",
     "@nx/workspace": "19.6.5",
     "@schematics/angular": "^18.2.3",
     "@types/jasmine": "~4.3.0",
