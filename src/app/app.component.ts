@@ -1,7 +1,11 @@
 import { Component, Signal, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { PaymentOption, Purchaser, Receipt } from './models/receipt/Receipt';
-import { addReceipt, removeReceipt } from './state/receipts/receipt.actions';
+import {
+  addReceipt,
+  removeReceipt,
+  resetState,
+} from './state/receipts/receipt.actions';
 import {
   selectAllReceipts,
   selectReceiptsByPurchaserAndPaymentOption,
@@ -14,6 +18,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-root',
@@ -81,6 +86,48 @@ export class AppComponent {
 
   removeReceipt(receipt: Receipt) {
     this.store.dispatch(removeReceipt({ id: receipt.id }));
+  }
+
+  onComplete() {
+    const doc = new jsPDF();
+
+    const currentDate: string = new Date().toDateString();
+    doc.text(currentDate, 10, 10);
+
+    doc.text('E', 10, 30);
+    doc.text('50%', 10, 40);
+    let x: number = 40;
+    this.receiptsByPurchaserE50().forEach((receipt) => {
+      x += 10;
+      doc.text(`${receipt.total.toString()} ${receipt.tag}`, 10, x);
+    });
+    x += 20;
+    doc.text('100%', 10, x);
+    this.receiptsByPurchaserE100().forEach((receipt) => {
+      x += 10;
+      doc.text(`${receipt.total.toString()} ${receipt.tag}`, 10, x);
+    });
+    x += 20;
+    doc.text('L', 10, x);
+    x += 10;
+    doc.text('50%', 10, x);
+    this.receiptsByPurchaserL50().forEach((receipt) => {
+      x += 10;
+      doc.text(`${receipt.total.toString()} ${receipt.tag}`, 10, x);
+    });
+    x += 20;
+    doc.text('100%', 10, x);
+    this.receiptsByPurchaserL100().forEach((receipt) => {
+      x += 10;
+      doc.text(`${receipt.total.toString()} ${receipt.tag}`, 10, x);
+    });
+    x += 20;
+    doc.text(this.total() as string, 10, x);
+
+    doc.save(`Kvitton ${currentDate}.pdf`);
+
+    this.resetForm();
+    this.store.dispatch(resetState());
   }
 
   private resetForm() {

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Receipt } from 'src/app/models/receipt/Receipt';
-import { addReceipt, removeReceipt } from './receipt.actions';
+import { addReceipt, removeReceipt, resetState } from './receipt.actions';
 
 export interface ReceiptState {
   receipts: Receipt[];
@@ -17,5 +17,6 @@ export const receiptReducer = createReducer(
   on(removeReceipt, (state, { id }) => ({
     ...state,
     receipts: state.receipts.filter((receipt) => receipt.id !== id),
-  }))
+  })),
+  on(resetState, () => initialState)
 );

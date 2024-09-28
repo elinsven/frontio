@@ -67,7 +67,13 @@
     <div class="flex items-center justify-center">
       <p class="total">{{ total() }}</p>
 
-      <button mat-raised-button color="primary" class="complete-button">
+      <button
+        type="button"
+        (click)="onComplete()"
+        mat-raised-button
+        color="primary"
+        class="complete-button"
+      >
         Complete
       </button>
     </div>

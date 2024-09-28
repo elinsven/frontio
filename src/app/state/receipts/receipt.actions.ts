@@ -10,3 +10,5 @@ export const removeReceipt = createAction(
   '[Receipt Page] Remove Receipt',
   props<{ id: string }>()
 );
+
+export const resetState = createAction('[Receipt Page] Remove Receipt');
