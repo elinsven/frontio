@@ -3,7 +3,7 @@ import { MatList, MatListItem } from '@angular/material/list';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/divider';
-import { Receipt } from '../../app/models/receipt/Receipt';
+import { Receipt } from '../../app/utils/types';
 
 @Component({
   selector: 'app-list',

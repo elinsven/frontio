@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ListComponent } from '../list/list.component';
-import { Receipt } from '../../app/models/receipt/Receipt';
+import { Receipt } from '../../app/utils/types';
 
 @Component({
   selector: 'app-receipt-list',

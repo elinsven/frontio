@@ -16,9 +16,7 @@
         "outputPath": "dist/receipt-handler",
         "index": "apps/receipt-handler/src/index.html",
         "main": "apps/receipt-handler/src/main.ts",
-        "polyfills": [
-          "zone.js"
-        ],
+        "polyfills": ["zone.js"],
         "tsConfig": "apps/receipt-handler/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -29,7 +27,8 @@
           "@angular/material/prebuilt-themes/deeppurple-amber.css",
           "apps/receipt-handler/src/styles.scss"
         ],
-        "scripts": []
+        "scripts": [],
+        "localize": true
       },
       "configurations": {
         "production": {
@@ -54,12 +53,18 @@
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
+        },
+        "en": {
+          "localize": ["en"],
+          "outputPath": "dist/apps/receipt-handler-en"
+        },
+        "sv": {
+          "localize": ["sv"],
+          "outputPath": "dist/apps/receipt-handler-sv"
         }
       },
       "defaultConfiguration": "production",
-      "outputs": [
-        "{options.outputPath}"
-      ]
+      "outputs": ["{options.outputPath}"]
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
@@ -82,10 +87,7 @@
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
-        "polyfills": [
-          "zone.js",
-          "zone.js/testing"
-        ],
+        "polyfills": ["zone.js", "zone.js/testing"],
         "tsConfig": "apps/receipt-handler/tsconfig.spec.json",
         "inlineStyleLanguage": "scss",
         "assets": [

@@ -1,16 +1,15 @@
 import { Component, Signal, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { PaymentOption, Purchaser, Receipt } from './models/receipt/Receipt';
 import {
   addReceipt,
   removeReceipt,
   resetState,
-} from './state/receipts/receipt.actions';
+} from './store/actions/receipt.actions';
 import {
   selectAllReceipts,
   selectReceiptsByPurchaserAndPaymentOption,
   selectReceiptTotal,
-} from './state/receipts/receipt.selectors';
+} from './store/selectors/receipt.selectors';
 import {
   AbstractControl,
   FormBuilder,
@@ -18,7 +17,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import jsPDF from 'jspdf';
+import { Receipt, Purchaser, PaymentOption } from './utils/types';
 
 @Component({
   selector: 'app-root',
@@ -89,43 +88,18 @@ export class AppComponent {
   }
 
   onComplete() {
-    const doc = new jsPDF();
-
-    const currentDate: string = new Date().toDateString();
-    doc.text(currentDate, 10, 10);
-
-    doc.text('E', 10, 30);
-    doc.text('50%', 10, 40);
-    let x: number = 40;
-    this.receiptsByPurchaserE50().forEach((receipt) => {
-      x += 10;
-      doc.text(`${receipt.total.toString()} ${receipt.tag}`, 10, x);
-    });
-    x += 20;
-    doc.text('100%', 10, x);
-    this.receiptsByPurchaserE100().forEach((receipt) => {
-      x += 10;
-      doc.text(`${receipt.total.toString()} ${receipt.tag}`, 10, x);
-    });
-    x += 20;
-    doc.text('L', 10, x);
-    x += 10;
-    doc.text('50%', 10, x);
-    this.receiptsByPurchaserL50().forEach((receipt) => {
-      x += 10;
-      doc.text(`${receipt.total.toString()} ${receipt.tag}`, 10, x);
-    });
-    x += 20;
-    doc.text('100%', 10, x);
-    this.receiptsByPurchaserL100().forEach((receipt) => {
-      x += 10;
-      doc.text(`${receipt.total.toString()} ${receipt.tag}`, 10, x);
-    });
-    x += 20;
-    doc.text(this.total() as string, 10, x);
-
-    doc.save(`Kvitton ${currentDate}.pdf`);
-
+    // TODO download csv file
+    /*  const headers: string[] = ['E 50%', 'E 100%', 'L 50%', 'L 100%'];
+    const combinedData: string[][] = this.receiptsByPurchaserE50().map(
+      (_, i) => [
+        this.receiptsByPurchaserE50()[i].total.toString() || '',
+        this.receiptsByPurchaserE100()[i].total.toString() || '',
+        this.receiptsByPurchaserL50()[i].total.toString() || '',
+        this.receiptsByPurchaserL100()[i].total.toString() || '',
+      ]
+    );
+    const csvContent: string = this.convertToCSV([headers, ...combinedData]);
+    this.downloadFile(csvContent); */
     this.resetForm();
     this.store.dispatch(resetState());
   }
@@ -135,4 +109,19 @@ export class AppComponent {
     this.totalFormControl.setErrors(null);
     this.paymentOptionFormControl.setValue('50');
   }
+
+  /*  private convertToCSV(data: string[][]): string {
+    return data.map((row) => row.join(',')).join('\r\n');
+  }
+
+  private downloadFile(csvContent: string): void {
+    const currentDate: string = new Date().toISOString();
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `kvitton-${currentDate}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  } */
 }

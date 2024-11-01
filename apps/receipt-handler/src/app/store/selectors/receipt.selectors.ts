@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
-import { AppState } from '../app.state';
-import { ReceiptState } from './receipt.reducer';
-import { Purchaser, Receipt } from '../../models/receipt/Receipt';
+import { AppState } from '../reducers';
+import { ReceiptState } from '../reducers/receipt.reducer';
+import { Receipt, Purchaser } from '../../utils/types';
 
 const selectReceiptState = (state: AppState) => state.receipts;
 
