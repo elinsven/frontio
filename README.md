@@ -1,4 +1,4 @@
 # ReceiptHandler
 
 Start
-npx nx run reciept-handler
+npx nx serve receipt-handler
