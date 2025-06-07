@@ -27,8 +27,7 @@
           "@angular/material/prebuilt-themes/deeppurple-amber.css",
           "apps/receipt-handler/src/styles.scss"
         ],
-        "scripts": [],
-        "localize": true
+        "scripts": []
       },
       "configurations": {
         "production": {
@@ -53,14 +52,6 @@
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
-        },
-        "en": {
-          "localize": ["en"],
-          "outputPath": "dist/apps/receipt-handler-en"
-        },
-        "sv": {
-          "localize": ["sv"],
-          "outputPath": "dist/apps/receipt-handler-sv"
         }
       },
       "defaultConfiguration": "production",
