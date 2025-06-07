@@ -15,14 +15,23 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { Receipt, Purchaser, PaymentOption } from './utils/types';
+import { ReceiptListComponent } from '../components';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
+  imports: [ReceiptListComponent, MatRadioModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  standalone: true
 })
 export class AppComponent {
   readonly store = inject(Store);
