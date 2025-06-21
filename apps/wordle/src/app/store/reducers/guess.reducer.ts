@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store"
 import { Guess, GuessStatus, Letter, LetterStatus } from "../../types"
 import { addLetter, removeLetter, resetState, submitGuess } from "../actions/guess.actions"
+import { loadWordsSuccess } from "../actions/words.action";
 
 export interface WordleState {
     guess: GuessState;
@@ -74,6 +75,13 @@ export const guessReducer = createReducer(
             };
         }
         return state;
+    }),
+    on(loadWordsSuccess, (state, { words }) => {
+        const randomIndex = Math.floor(Math.random() * words.length);
+        return {
+            ...state,
+            answer: words[randomIndex].toUpperCase()
+        }
     }),
     on(resetState, () => initialState
     )

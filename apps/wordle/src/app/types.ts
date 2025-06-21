@@ -20,3 +20,7 @@ export enum LetterStatus {
     WrongPosition = "wrongPosition",
     NotInWord = "notInWord",
 }
+
+export interface WordsResponse {
+    words: string[];
+}
