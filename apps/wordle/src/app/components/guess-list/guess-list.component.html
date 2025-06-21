@@ -1,0 +1,5 @@
+<div class="flex-col align-items-center margin-bottom-8 margin-top-10">
+@for (guess of guesses(); track guess) {
+<app-guess-row [guess]="guess.letters"></app-guess-row>
+}
+</div>

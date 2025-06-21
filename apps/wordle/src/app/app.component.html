@@ -1,0 +1,9 @@
+<app-guess-list [guesses]="guesses()"></app-guess-list>
+<app-keyboard (letterClick)="onLetterClick($event)" (enterClick)="onEnterClick()"
+    (backspaceClick)="onBackspaceClick()"></app-keyboard>
+
+@if (gameOver()) {
+<button class="margin-top-10" mat-raised-button color="primary" (click)="onNewGameClick()">
+    New Game
+</button>
+}

@@ -1,0 +1,28 @@
+<div class="flex-row gap-2 margin-bottom-2 ">
+    <div [class.green]="guess()?.at(0)?.status === letterStatus.Correct"
+        [class.yellow]="guess()?.at(0)?.status === letterStatus.WrongPosition"
+        [class.gray]="guess()?.at(0)?.status === letterStatus.NotInWord"
+        class="font-10 flex-row align-items-center justify-content-center border height-16 width-16 border-radius-2">
+        {{guess()?.at(0)?.letter || ""}}
+    </div>
+    <div [class.green]="guess()?.at(1)?.status === letterStatus.Correct"
+        [class.yellow]="guess()?.at(1)?.status === letterStatus.WrongPosition"
+        [class.gray]="guess()?.at(1)?.status === letterStatus.NotInWord"
+        class="font-10 flex-row align-items-center justify-content-center border height-16 width-16 border-radius-2">
+        {{guess()?.at(1)?.letter || ""}}</div>
+    <div [class.green]="guess()?.at(2)?.status === letterStatus.Correct"
+        [class.yellow]="guess()?.at(2)?.status === letterStatus.WrongPosition"
+        [class.gray]="guess()?.at(2)?.status === letterStatus.NotInWord"
+        class="font-10 flex-row align-items-center justify-content-center border height-16 width-16 border-radius-2">
+        {{guess()?.at(2)?.letter || ""}}</div>
+    <div [class.green]="guess()?.at(3)?.status === letterStatus.Correct"
+        [class.yellow]="guess()?.at(3)?.status === letterStatus.WrongPosition"
+        [class.gray]="guess()?.at(3)?.status === letterStatus.NotInWord"
+        class="font-10 flex-row align-items-center justify-content-center border height-16 width-16 border-radius-2">
+        {{guess()?.at(3)?.letter || ""}}</div>
+    <div [class.green]="guess()?.at(4)?.status === letterStatus.Correct"
+        [class.yellow]="guess()?.at(4)?.status === letterStatus.WrongPosition"
+        [class.gray]="guess()?.at(4)?.status === letterStatus.NotInWord"
+        class="font-10 flex-row align-items-center justify-content-center border height-16 width-16 border-radius-2">
+        {{guess()?.at(4)?.letter || ""}}</div>
+</div>
